@@ -2,21 +2,27 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require("cors");
 
 //Internal Modules
 const { environment } = require('./config');
 const apiRouter = require('./routes/api')
+const authRouter = require('./routes/authRoutes')
 
 //Declarations
 const app = express();
 
 //Application-wide Middleware
+app.use(cors());
 app.use(cookieParser());
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 //Routes
 app.use('/api', apiRouter)
+app.use('/auth', authRouter)
 
 //ERRORS
 // Error Catch

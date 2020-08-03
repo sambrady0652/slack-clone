@@ -1,20 +1,43 @@
-import React from 'react';
-import { Box } from 'grommet';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
+import { PrivateRoute } from './utils/routesUtil';
+import Signin from './components/Signin';
+import Channel from './components/Channel';
+import Signup from './components/Signup';
+
+const App = (props) => {
+  const [token, setToken] = useState(window.localStorage.getItem('state-stack-token'))
+  const [needSignin, setNeedSignin] = useState(!token)
+
+  const updateToken = token => {
+    window.localStorage.setItem('state-stack-token', token);
+    setNeedSignin(false)
+    setToken(token);
+  }
+
   return (
-    <Box
-      tag='header'
-      direction='row'
-      align='center'
-      justify='between'
-      background='brand'
-      pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-      elevation='medium'
-      style={{ zIndex: '1' }}>
-      Hello
-    </Box>
-  );
+    <>
+      <BrowserRouter>
+        <Switch>
+          <Route
+            path="/signin"
+            render={() => <Signin updateToken={updateToken} />}
+          />
+          <Route
+            path="/signup"
+            render={() => <Signup updateToken={updateToken} />}
+          />
+          <PrivateRoute
+            exact path="/"
+            component={Channel}
+            needSignin={needSignin}
+          />
+        </Switch>
+      </BrowserRouter>
+    </>
+  )
 }
+
 
 export default App;
