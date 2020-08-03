@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { baseUrl } from '../config';
+import { useDispatch, useSelector } from 'react-redux'
 
-const Signup = (props) => {
+import { signUp } from '../store/authentication';
+
+const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
-  const [token, setToken] = useState("")
   //TODO: ImageUrl on Signup
+  const dispatch = useDispatch();
+  const { needSignIn } = useSelector(state => state.authentication)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${baseUrl}/auth/signup`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, password, title }),
-    });
-    if (response.ok) {
-      const { token } = await response.json();
-      props.updateToken(token);
-      setToken(token);
-    }
+    dispatch(signUp(firstName, lastName, email, password, title));
   }
 
-  if (token) {
+  if (!needSignIn) {
     return <Redirect to="/" />;
   }
 

@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import { PrivateRoute } from './utils/routesUtil';
+import PrivateRoute from './utils/routesUtil';
 import Signin from './components/Signin';
-import Channel from './components/Channel';
+import Main from './components/Main';
 import Signup from './components/Signup';
 
 const App = (props) => {
-  const [token, setToken] = useState(window.localStorage.getItem('state-stack-token'))
-  const [needSignin, setNeedSignin] = useState(!token)
-
-  const updateToken = token => {
-    window.localStorage.setItem('state-stack-token', token);
-    setNeedSignin(false)
-    setToken(token);
-  }
 
   return (
     <>
@@ -22,22 +15,22 @@ const App = (props) => {
         <Switch>
           <Route
             path="/signin"
-            render={() => <Signin updateToken={updateToken} />}
+            component={Signin}
           />
           <Route
             path="/signup"
-            render={() => <Signup updateToken={updateToken} />}
+            component={Signup}
           />
           <PrivateRoute
             exact path="/"
-            component={Channel}
-            needSignin={needSignin}
+            component={Main}
           />
         </Switch>
       </BrowserRouter>
     </>
   )
 }
+
 
 
 export default App;

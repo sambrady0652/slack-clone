@@ -1,17 +1,14 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import Main from '../components/Main';
 
-export const PrivateRoute = ({
-  path,
-  component: Component,
-  needSignin,
-  componentProps,
-}) => (
-    <Route path={path} render={props =>
-      needSignin === true ? (
-        <Redirect to="/signin" />
-      ) : (
-          <Component {...props} {...componentProps} />
-        )}
-    />
-  );
+const PrivateRoute = () => {
+  const token = localStorage.getItem("STACK_TOKEN")
+
+  if (!token) {
+    return <Redirect to="/signin" />
+  }
+  return <Route path="/" component={Main} />
+}
+
+export default PrivateRoute;
