@@ -20,7 +20,7 @@ const Signup = () => {
   }
 
   if (!needSignIn) {
-    return <Redirect to="/" />;
+    return <Redirect to="/1" />;
   }
 
   return (

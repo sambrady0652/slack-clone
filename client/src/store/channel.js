@@ -14,7 +14,7 @@ export default function reducer(state = {}, action) {
 
 export const getChannel = () => async dispatch => {
   try {
-    const res = await fetch(`${baseUrl}/api/:channelId`);
+    const res = await fetch(`${baseUrl}/api/:id(\\d+)`);
     if (!res.ok) {
       throw res
     }

@@ -28,7 +28,7 @@ const App = (props) => {
             component={Signup}
           />
           <PrivateRoute
-            exact path="/"
+            path="/"
             component={Main}
           />
         </Switch>
