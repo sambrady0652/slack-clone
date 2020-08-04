@@ -26,6 +26,8 @@ export const getChannel = () => async dispatch => {
   }
 }
 
+//ACTION CREATORS
+
 export const loadChannel = (channel) => {
   return {
     type: LOAD_CHANNEL,
