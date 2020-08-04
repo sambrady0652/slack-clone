@@ -1,12 +1,10 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { signOut, setToken } from '../store/authentication'
-import { Redirect } from 'react-router-dom';
+import { signOut } from '../store/authentication'
 
 const SignoutButton = () => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem("STACK_TOKEN");
 
   const handleClick = () => {
     dispatch(signOut());
