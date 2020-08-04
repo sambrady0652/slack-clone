@@ -9,16 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       lastName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       passwordHash: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING.BINARY
       },
       imageUrl: {
         type: Sequelize.STRING

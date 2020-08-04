@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false
     },
+
+    //NOTE: remove allowNull restriction if it is disrupting frontend error handling 
     email: {
       type: DataTypes.STRING(80),
       allowNull: false
@@ -23,7 +25,19 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING
   }, {});
   User.associate = function (models) {
-    // associations can be defined here
+    const columnMapping = {
+      through: "UserJoinChannels",
+      foreignKey: "userId",
+      otherKey: "channelId"
+    }
+    const messageColumnMapping = {
+      through: "UserLikedMessages",
+      foreignKey: "userId",
+      otherKey: "messageId"
+    }
+    User.belongsToMany(models.Channel, columnMapping);
+    User.hasMany(models.Message, { foreignKey: "userId" });
+    User.belongsToMany(models.Message, messageColumnMapping);
   };
 
   User.prototype.validatePassword = function (password) {
