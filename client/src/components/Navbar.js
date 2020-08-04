@@ -1,8 +1,12 @@
 import React from 'react';
+import SignoutButton from './Signout';
 
 const Navbar = () => {
   return (
-    <div>Navbar</div>
+    <>
+      <div>Navbar</div>
+      <SignoutButton />
+    </>
   )
 }
 

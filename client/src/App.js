@@ -6,6 +6,7 @@ import PrivateRoute from './utils/routesUtil';
 import Signin from './components/Signin';
 import Main from './components/Main';
 import Signup from './components/Signup';
+import Home from './components/Home';
 import { loadToken } from './store/authentication';
 
 const App = (props) => {
@@ -27,9 +28,13 @@ const App = (props) => {
             path="/signup"
             component={Signup}
           />
-          <PrivateRoute
-            path="/"
+          <Route
+            exact path="/:id"
             component={Main}
+          />
+          <PrivateRoute
+            exact path="/"
+            component={Home}
           />
         </Switch>
       </BrowserRouter>

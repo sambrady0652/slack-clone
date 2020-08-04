@@ -16,7 +16,7 @@ const Signin = () => {
   }
 
   if (!needSignIn) {
-    return <Redirect to="/1" />
+    return <Redirect to="/" />
   }
 
   return (

@@ -1,24 +1,14 @@
 import { baseUrl } from '../config'
 
-const LOAD_CHANNEL = "LOAD_CHANNEL"
+const LOAD_CHANNEL = "stack/store/LOAD_CHANNEL"
 
-export default function reducer(state = {}, action) {
-  Object.freeze(state);
-
-  const newState = Object.assign({}, state);
-  switch (action.type) {
-
-    default: return state;
-  }
-}
-
-export const getChannel = () => async dispatch => {
+export const getChannel = (channelId) => async dispatch => {
   try {
-    const res = await fetch(`${baseUrl}/api/:id(\\d+)`);
+    const res = await fetch(`${baseUrl}/api/${channelId}`);
     if (!res.ok) {
       throw res
     }
-    const { channel } = res.json();
+    const { channel } = await res.json();
     dispatch(loadChannel(channel));
   }
   catch (e) {
@@ -29,10 +19,13 @@ export const getChannel = () => async dispatch => {
 //ACTION CREATORS
 
 export const loadChannel = (channel) => {
-  return {
+  // const { id } = channel
+  const action = {
     type: LOAD_CHANNEL,
     channel
   }
+  return action;
+
 }
 
 // channel: {
@@ -48,3 +41,32 @@ export const loadChannel = (channel) => {
 
 //   }
 // }
+
+//REDUCER 
+const initialState = {
+  channel: {
+    id: 1,
+    name: "",
+    topic: "",
+    Users: [],
+    Messages: []
+  }
+}
+export default function reducer(state = {}, action) {
+  Object.freeze(state);
+
+  const newState = Object.assign({}, state);
+  switch (action.type) {
+    case LOAD_CHANNEL:
+      //TODO: Fix State Shape
+      return {
+        ...newState,
+        id: action.channel.id,
+        name: action.channel.name,
+        topic: action.channel.topic,
+        users: action.channel.Users,
+        messages: action.channel.Messages
+      }
+    default: return state;
+  }
+}
