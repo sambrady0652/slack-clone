@@ -7,8 +7,8 @@ module.exports = {
         firstName: 'Default',
         lastName: 'User',
         email: 'default@user.com',
-        title: "Head of Default",
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF6',
+        title: "Head of Default",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -16,8 +16,8 @@ module.exports = {
         firstName: 'Best',
         lastName: 'Friend',
         email: 'best@friend.com',
-        title: "VP of Friends",
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF5',
+        title: "VP of Friends",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -25,8 +25,8 @@ module.exports = {
         firstName: 'New',
         lastName: 'Guy',
         email: 'new@guy.com',
-        title: "The New Guy",
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF4',
+        title: "The New Guy",
         createdAt: new Date(),
         updatedAt: new Date()
       },
