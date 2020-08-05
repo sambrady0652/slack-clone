@@ -8,13 +8,12 @@ const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const { needSignIn } = useSelector(state => state.authentication)
 
+  const { needSignIn } = useSelector(state => state.authentication)
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(signIn(email, password));
   }
-  debugger
   if (!needSignIn) {
     return <Redirect to="/channels/1" />
   }
