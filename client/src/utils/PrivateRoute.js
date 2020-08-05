@@ -7,7 +7,7 @@ import Home from '../components/Home';
 const PrivateRoute = () => {
   const { needSignIn } = useSelector(state => state.authentication)
   if (needSignIn) {
-    return <Redirect to="/signin" />
+    return <Redirect to="/users/signin" />
   }
   return <Route exact path="/" component={Home} />
 }

@@ -14,15 +14,15 @@ const Signin = () => {
     e.preventDefault();
     dispatch(signIn(email, password));
   }
-
+  debugger
   if (!needSignIn) {
-    return <Redirect to="/" />
+    return <Redirect to="/channels/1" />
   }
 
   return (
     <main className="centered middled">
       <div>
-        don't have an account? <NavLink to="/signup"> sign up here!</NavLink>
+        don't have an account? <NavLink to="/users/signup"> sign up here!</NavLink>
       </div>
       <form onSubmit={handleSubmit}>
         <input type="text"

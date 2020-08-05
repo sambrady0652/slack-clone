@@ -10,7 +10,7 @@ const { Channel, User, Message } = require('../db/models')
 //Middleware
 router.use(cookieParser());
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.get('/channels/:id(\\d+)', asyncHandler(async (req, res) => {
   const channelId = Number(req.params.id);
 
   const channel = await Channel.findOne({

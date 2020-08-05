@@ -4,7 +4,7 @@ const LOAD_CHANNEL = "stack/store/LOAD_CHANNEL"
 
 export const getChannel = (channelId) => async dispatch => {
   try {
-    const res = await fetch(`${baseUrl}/api/${channelId}`);
+    const res = await fetch(`${baseUrl}/api/channels/${channelId}`);
     if (!res.ok) {
       throw res
     }

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 
-import PrivateRoute from './utils/routesUtil';
+import PrivateRoute from './utils/PrivateRoute';
+import ProtectedRoute from './utils/ProtectedRoute';
 import Signin from './components/Signin';
 import Main from './components/Main';
 import Signup from './components/Signup';
 import Home from './components/Home';
 import { loadToken } from './store/authentication';
+import { Route53Domains } from 'aws-sdk';
 
 const App = (props) => {
   const dispatch = useDispatch();
@@ -21,15 +23,15 @@ const App = (props) => {
       <BrowserRouter>
         <Switch>
           <Route
-            path="/signin"
+            path="/users/signin"
             component={Signin}
           />
           <Route
-            path="/signup"
+            path="/users/signup"
             component={Signup}
           />
           <Route
-            exact path="/:id"
+            path="/channels/:id"
             component={Main}
           />
           <PrivateRoute

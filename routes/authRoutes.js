@@ -70,7 +70,7 @@ router.post('/signin', asyncHandler(async (req, res) => {
 
 //Remove User
 router.post(
-  '/:id(\\d+)/',
+  'users/:id(\\d+)/',
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);

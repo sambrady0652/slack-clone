@@ -20,12 +20,12 @@ const Signup = () => {
   }
 
   if (!needSignIn) {
-    return <Redirect to="/1" />;
+    return <Redirect to="/channels/1" />;
   }
 
   return (
     <main className="centered middled">
-      <div>already have an account? <NavLink to="/signin">sign in here</NavLink> </div>
+      <div>already have an account? <NavLink to="/users/signin">sign in here</NavLink> </div>
       <form onSubmit={handleSubmit}>
         <input type="text"
           placeholder="First Name"
