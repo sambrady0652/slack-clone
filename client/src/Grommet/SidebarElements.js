@@ -6,20 +6,15 @@ import {
   Avatar,
   Button,
   Box,
-  grommet,
-  Grommet,
   Nav,
   Stack,
   Text,
-  Sidebar
 } from 'grommet';
 
 import {
   Analytics,
-  Chat,
   Clock,
   Configure,
-  Help,
   Projects,
   Split,
   StatusInfoSmall,
@@ -29,7 +24,7 @@ import {
 const src = '//s.gravatar.com/avatar/b7fb138d53ba0f573212ccce38a7c43b?s=80';
 
 export const SidebarHeader = () => (
-  <Box align="center" gap="small" direction="row" margin={{ bottom: 'large' }}>
+  <Box align="center" gap="small" direction="row" margin={{ bottom: 'small' }}>
     <Stack alignSelf="start" align="center" anchor="top-right">
       <Avatar src={src} />
       <Box pad="xsmall" background="orange" round responsive={false} />
@@ -42,25 +37,23 @@ export const SidebarButton = ({ icon, label, ...rest }) => {
   return (
     <Box pad="small">
       <Button
+        fill="horizontal"
+        pad="xlarge"
         gap="medium"
         alignSelf="start"
         plain
         icon={icon}
         label={label}
         {...rest}
+        hoverIndicator={{ color: "purple" }}
       />
     </Box>
   )
 };
 
-export const SidebarFooter = () => (
-  <Nav>
-    <SidebarButton icon={<Chat />} label="Chat" />
-    <SidebarButton icon={<Help />} label="Support" />
-  </Nav>
-);
-
 export const MainNavigation = () => {
+
+  //TODO: Retrieve Joined Channels, create NavLink for each channel
   const dispatch = useDispatch();
 
   const handleSignout = () => {
@@ -68,7 +61,7 @@ export const MainNavigation = () => {
   }
 
   return (
-    <Nav gap="large" responsive={false}>
+    <Nav gap="small" fill="horizontal" responsive={false}>
       <SidebarButton icon={<StatusInfoSmall />} label="Focus" />
       <SidebarButton icon={<Projects />} label="Services" />
       <SidebarButton icon={<Clock />} label="Glances" />
@@ -79,19 +72,3 @@ export const MainNavigation = () => {
     </Nav>
   );
 }
-
-export const Labels = () => (
-  <Grommet theme={grommet} full>
-    <Box direction="row" height={{ min: '100%' }}>
-      <Sidebar
-        responsive={false}
-        background="neutral-2"
-        header={<SidebarHeader />}
-        footer={<SidebarFooter />}
-        pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
-      >
-        <MainNavigation />
-      </Sidebar>
-    </Box>
-  </Grommet>
-);

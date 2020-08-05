@@ -4,27 +4,24 @@ import { Sidebar, Box } from 'grommet';
 
 import {
   SidebarHeader,
-  SidebarButton,
-  SidebarFooter,
   MainNavigation,
-  Labels
 } from "../Grommet/SidebarElements"
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
-    <Box direction="row" height={{ min: '100%' }}>
+    <Box
+      gridArea={props.gridArea}
+      direction="row">
       <Sidebar
-        responsive={false}
+        fill
         background="neutral-2"
         header={<SidebarHeader />}
-        footer={<SidebarFooter />}
         pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
       >
         <MainNavigation />
       </Sidebar>
     </Box>
   )
-
 }
 
 export default Navbar;

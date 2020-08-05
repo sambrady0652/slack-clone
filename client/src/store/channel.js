@@ -43,15 +43,7 @@ export const loadChannel = (channel) => {
 // }
 
 //REDUCER 
-const initialState = {
-  channel: {
-    id: 1,
-    name: "",
-    topic: "",
-    Users: [],
-    Messages: []
-  }
-}
+
 export default function reducer(state = {}, action) {
   Object.freeze(state);
 
