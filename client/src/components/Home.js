@@ -11,7 +11,6 @@ const Home = () => {
         don't have an account? <NavLink to="/users/signup"> sign up here!</NavLink>
       </div>
       <div>already have an account? <NavLink to="/users/signin">sign in here</NavLink> </div>
-      <Navbar />
     </>
   )
 }
