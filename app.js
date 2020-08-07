@@ -10,8 +10,10 @@ const { environment } = require('./config');
 const apiRouter = require('./routes/api')
 const authRouter = require('./routes/authRoutes')
 
-//Declarations
+//Server and Websocket Setup
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 //Application-wide Middleware
 app.use(cors());
@@ -20,10 +22,25 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Routes
+//ROUTES
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)
 
+//WEBSOCKETS
+// io.on('connection', (client) => {
+//   client.on('subscribeToTimer', (interval) => {
+//     console.log('client is subscribing to timer with interval ', interval);
+//     setInterval(() => {
+//       client.emit('timer', new Date());
+//     }, interval);
+//   });
+// });
+
+// const port = 8000;
+// io.listen(port);
+// console.log('listening on port ', port);
+
+//REACT BUILD CONFIG FOR HEROKU
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('/', (req, res) => {
@@ -68,4 +85,4 @@ app.use((err, req, res, next) => {
   res.send("sorry, server error")
 });
 
-module.exports = app;
+module.exports = http

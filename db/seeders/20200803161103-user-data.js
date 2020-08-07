@@ -9,6 +9,7 @@ module.exports = {
         email: 'default@user.com',
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF6',
         title: "Head of Default",
+        imageUrl: "https://stack-user-photosd94332e2-2c2a-4c08-8ee9-3fc0cc2f3137.s3.amazonaws.com/default-avatar.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -18,6 +19,7 @@ module.exports = {
         email: 'best@friend.com',
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF5',
         title: "VP of Friends",
+        imageUrl: "https://stack-user-photosd94332e2-2c2a-4c08-8ee9-3fc0cc2f3137.s3.amazonaws.com/default-avatar.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +29,7 @@ module.exports = {
         email: 'new@guy.com',
         passwordHash: '$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF4',
         title: "The New Guy",
+        imageUrl: "https://stack-user-photosd94332e2-2c2a-4c08-8ee9-3fc0cc2f3137.s3.amazonaws.com/default-avatar.jpg",
         createdAt: new Date(),
         updatedAt: new Date()
       },

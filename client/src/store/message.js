@@ -1,4 +1,5 @@
 import { baseUrl } from '../config';
+import openSocket from 'socket.io-client';
 
 export const getMessages = () => async dispatch => {
   try {

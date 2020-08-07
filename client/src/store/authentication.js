@@ -28,13 +28,21 @@ export const signIn = (email, password) => async dispatch => {
 }
 
 //SIGN UP 
-export const signUp = (firstName, lastName, email, password, title) => async dispatch => {
+export const signUp = (firstName, lastName, email, password, title, profPic) => async dispatch => {
   try {
-    //Retrieve Information from Server
+    const formData = new FormData();
+    formData.append("firstName", firstName)
+    formData.append("lastName", lastName)
+    formData.append("email", email)
+    formData.append("password", password)
+    formData.append("title", title)
+    if (profPic !== "") {
+      formData.append("profPic", profPic, `${firstName}-profpic`)
+    }
+
     const response = await fetch(`${baseUrl}/auth/signup`, {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, password, title }),
+      body: formData
     });
     if (!response.ok) {
       throw response
@@ -45,7 +53,7 @@ export const signUp = (firstName, lastName, email, password, title) => async dis
     dispatch(setToken(token));
   }
   catch (err) {
-
+    console.error(err);
   }
 }
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Send } from 'grommet-icons';
-import { Box, TextInput, Button } from 'grommet'
+import { Box, TextInput, Button } from 'grommet';
 
 const MessageComposer = (props) => {
   const [newMessage, setNewMessage] = useState('');
-  const handleSend = () => {
-
+  const handleSend = (e) => {
+    e.preventDefault();
   }
 
   return (

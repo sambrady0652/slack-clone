@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { Box, Form, Button } from 'grommet';
 
 import { signUp } from '../store/authentication';
+import { FormFieldLabel } from '../Grommet/FormElements';
 
 const Signup = () => {
   const [firstName, setFirstName] = useState('');
@@ -10,13 +12,13 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
-  //TODO: ImageUrl on Signup
+  const [profPic, setProfPic] = useState("")
+
   const dispatch = useDispatch();
   const { needSignIn } = useSelector(state => state.authentication)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signUp(firstName, lastName, email, password, title));
+    dispatch(signUp(firstName, lastName, email, password, title, profPic));
   }
 
   if (!needSignIn) {
@@ -24,32 +26,51 @@ const Signup = () => {
   }
 
   return (
-    <main className="centered middled">
+    <Box align="center" pad="large">
       <div>already have an account? <NavLink to="/users/signin">sign in here</NavLink> </div>
-      <form onSubmit={handleSubmit}>
-        <input type="text"
-          placeholder="First Name"
+      <Form onSubmit={handleSubmit} encType="multipart/form-data" className="sign-up-form">
+        <FormFieldLabel
+          required
+          name="firstName"
+          type="text"
+          label="First Name"
           value={firstName}
           onChange={e => setFirstName(e.target.value)} />
-        <input type="text"
-          placeholder="Last Name"
+        <FormFieldLabel
+          required
+          name="lastName"
+          type="text"
+          label="Last Name"
           value={lastName}
           onChange={e => setLastname(e.target.value)} />
-        <input type="text"
-          placeholder="Email"
+        <FormFieldLabel
+          required
+          name="email"
+          type="text"
+          label="Email"
           value={email}
           onChange={e => setEmail(e.target.value)} />
-        <input type="password"
-          placeholder="Password"
+        <FormFieldLabel
+          required
+          name="password"
+          type="password"
+          label="Password"
           value={password}
           onChange={e => setPassword(e.target.value)} />
-        <input type="text"
-          placeholder="Title (Optional)"
+        <FormFieldLabel
+          name="title"
+          type="text"
+          label="Title"
           value={title}
           onChange={e => setTitle(e.target.value)} />
-        <button type="submit">Signup</button>
-      </form>
-    </main>
+        <input
+          name="profPic"
+          type="file"
+          label="Profile Picture"
+          onChange={e => setProfPic(e.target.files[0])} />
+        <Button primary plain={false} type="submit">Signup</Button>
+      </Form>
+    </Box>
   );
 }
 
