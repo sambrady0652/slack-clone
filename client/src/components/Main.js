@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+import { getChannel } from '../store/channel'
 import { Grid } from 'grommet';
 
 import Navbar from './Navbar';
@@ -7,7 +11,13 @@ import Channel from './Channel';
 import MessageComposer from './MessageComposer'
 
 const Main = () => {
-  //TODO: try and put this in a useEffect?
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getChannel(id))
+  })
+
   const token = localStorage.getItem("STACK_TOKEN")
   if (!token) {
     return <Redirect to="/users/signin" />

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from "react-redux";
 import { Send } from 'grommet-icons';
 import { Box, TextInput, Button } from 'grommet';
 
 const MessageComposer = (props) => {
+  const { name } = useSelector(state => state.channel)
   const [newMessage, setNewMessage] = useState('');
   const handleSend = (e) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ const MessageComposer = (props) => {
           direction="row"
           align="center">
           <TextInput
-            placeholder={`Message to ${props.name}`}
+            placeholder={`Message to ${name}`}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)} />
           <Button primary alignSelf="end" plain={false} icon={<Send />} />

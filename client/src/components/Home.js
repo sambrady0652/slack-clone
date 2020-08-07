@@ -1,15 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { Box, Heading, Text, Anchor } from 'grommet'
 const Home = () => {
   return (
-    <>
-      <div>Home</div>
-      <div>
-        don't have an account? <NavLink to="/users/signup"> sign up here!</NavLink>
-      </div>
-      <div>already have an account? <NavLink to="/users/signin">sign in here</NavLink> </div>
-    </>
+    <Box justify="center" align="center" background="brand" fill>
+      <Heading>Welcome to Stack!</Heading>
+      <Text>don't have an account? <Anchor href="/users/signup" label="sign up here!" color="white" /></Text>
+      <Text>already have an account? <Anchor href="/users/signin" label="sign in here!" color="white" /></Text>
+    </Box>
   )
 }
 
