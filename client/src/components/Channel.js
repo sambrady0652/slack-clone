@@ -1,33 +1,34 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Header, Main, Text } from 'grommet'
+import { Box, Header } from 'grommet'
 
 import Message from './Message'
 
 const Channel = (props) => {
-  const { name, topic, messages } = useSelector(state => state.channel)
+  const { name, topic, messages, users } = useSelector(state => state.channel)
+  const members = users.map(user => user.User);
 
   if (!messages) {
     return <div>Loading Messages...</div>;
   }
 
   return (
-    <Box gridArea={props.gridArea}>
-      <Box fill >
-        <Header pad="small" >
-          <Text size="medium">{name}</Text>
-          <Text size="medium">{topic}</Text>
-        </Header>
-        <Main
-          direction="column-reverse">
-          {messages.map(message => {
-            return (
-              <Message key={message.id} message={message} />
-            )
-          })}
-        </Main>
+    //TODO: GET HEADER INTO CHANNEL
+    // <Header pad="small" >
+    //   <Text size="medium">{name}</Text>
+    //   <Text size="medium">{topic}</Text>
+    // </Header>
+    <Box gridArea={props.gridArea}
+      direction="column-reverse">
+      <Box>
+        {messages.map(message => {
+          return (
+            <Message key={message.id} message={message} />
+          )
+        })}
       </Box>
     </Box >
+
   )
 }
 

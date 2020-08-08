@@ -18,12 +18,7 @@ const Signin = () => {
     dispatch(signIn(email, password));
   }
   if (!needSignIn) {
-    return <Redirect to={`/channels/3`} />
-    // const general = async () => {
-    //   const generalId = await getGeneralId();
-    //   console.log(generalId);
-    // }
-    // general();
+    return <Redirect to={`/channels/1`} />
   }
 
   return (

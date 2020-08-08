@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 //Internal Modules
 const router = express.Router();
 const { asyncHandler } = require('../utils')
-const { Channel, User, Message } = require('../db/models')
+const { Channel, User, Message, UserJoinChannel } = require('../db/models')
 
 //Middleware
 router.use(cookieParser());
@@ -17,23 +17,16 @@ router.get('/channels/:id(\\d+)', asyncHandler(async (req, res) => {
     where: {
       id: channelId
     },
-    include: [{ model: User }, { model: Message }],
-
+    include: [{ model: Message, include: [User] }],
   });
-  res.json({ channel })
-}));
-
-router.get('/channels/general', asyncHandler(async (req, res) => {
-  const general = await Channel.findOne({
+  const users = await UserJoinChannel.findAll({
     where: {
-      name: "General"
+      channelId: channelId
     },
-    include: [{ model: User }, { model: Message }],
-
-  });
-  res.json({ general })
+    include: [User]
+  })
+  res.json({ channel, users })
 }));
-
 
 
 router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
@@ -42,7 +35,7 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
     where: {
       id: userId
     },
-    include: [{ model: Channel }, { model: Message }],
+    include: [{ model: Message }],
 
   });
   const { id, firstName, lastName, email, imageUrl, title } = user;
@@ -56,5 +49,14 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   });
 }));
 
+router.put('/messages', asyncHandler(async (req, res) => {
+  const { newMessage, channelId, userId } = req.body;
 
+  const message = await Message.create({
+    content: newMessage,
+    userId,
+    channelId
+  });
+  res.json({ message })
+}))
 module.exports = router;

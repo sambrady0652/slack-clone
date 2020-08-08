@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Send } from 'grommet-icons';
 import { Box, TextInput, Button } from 'grommet';
 
+import { writeMessage } from "../store/message";
+
 const MessageComposer = (props) => {
-  const { name } = useSelector(state => state.channel)
+  const { name, id } = useSelector(state => state.channel)
+  const { userId } = useSelector(state => state.user)
   const [newMessage, setNewMessage] = useState('');
+  const dispatch = useDispatch();
   const handleSend = (e) => {
     e.preventDefault();
+    dispatch(writeMessage(newMessage, id, userId))
   }
 
   return (
-    <Box gridArea={props.gridArea} pad={{ top: "large", bottom: "small" }}>
+    <Box gridArea={props.gridArea}
+      pad={{ left: "xsmall" }}
+      alignSelf="end"
+    >
       <form onSubmit={handleSend} >
         <Box
           width="large"

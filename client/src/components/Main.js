@@ -25,18 +25,17 @@ const Main = () => {
 
   return (
     <Grid
-      fill
+      justifyContent="stretch"
       rows={['flex', 'xsmall']}
       columns={['1/4', 'flex']}
       areas={[
         ['sidebar', 'main'],
         ['sidebar', 'message'],
       ]}
-      gap="small"
     >
-      <Navbar background="light-5" gridArea="sidebar" />
-      <Channel background="light-2" gridArea="main" />
-      <MessageComposer background="dark-2" gridArea="message" />
+      <Navbar gridArea="sidebar" />
+      <Channel gridArea="main" />
+      <MessageComposer gridArea="message" />
     </Grid>
 
   )

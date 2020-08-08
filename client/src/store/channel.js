@@ -8,58 +8,38 @@ export const getChannel = (channelId) => async dispatch => {
     if (!res.ok) {
       throw res
     }
-    const { channel } = await res.json();
-    dispatch(loadChannel(channel));
+    const { channel, users } = await res.json();
+    dispatch(loadChannel(channel, users));
   }
   catch (e) {
     console.error(e);
   }
 }
 
-export const getGeneralId = async () => {
-  try {
-    const res = await fetch(`${baseUrl}/api/channels/general`);
-
-    if (!res.ok) {
-      throw res
-    }
-    const { general } = await res.json();
-    console.log(general.id);
-    return general.id
-  }
-  catch (e) {
-    console.error(e)
-  }
-}
 //ACTION CREATORS
 
-export const loadChannel = (channel) => {
+export const loadChannel = (channel, users) => {
   // const { id } = channel
   const action = {
     type: LOAD_CHANNEL,
-    channel
+    channel,
+    users
   }
   return action;
 
 }
 
-// channel: {
-//   1: {
-//     id: 1,
-//     name: "",
-//     purpose: "",
-//     messages: [//array of message id's]
-//     users: [//array of userId's]
-//   },
-
-//   2: {
-
-//   }
-// }
+const initialState = {
+  id: "",
+  name: "",
+  topic: "",
+  users: [],
+  messages: []
+}
 
 //REDUCER 
 
-export default function reducer(state = {}, action) {
+export default function reducer(state = initialState, action) {
   Object.freeze(state);
 
   const newState = Object.assign({}, state);
@@ -71,8 +51,8 @@ export default function reducer(state = {}, action) {
         id: action.channel.id,
         name: action.channel.name,
         topic: action.channel.topic,
-        users: action.channel.Users,
-        messages: action.channel.Messages
+        users: action.users,
+        messages: action.channel.Messages,
       }
     default: return state;
   }
