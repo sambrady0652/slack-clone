@@ -1,9 +1,10 @@
 import { baseUrl } from '../config';
 
 //ACTION TYPES AND LOCAL STORAGE ASSIGNMENTS
-const SET_TOKEN = 'stack/authentication/SET_TOKEN';
 const REMOVE_TOKEN = 'stack/authentication/REMOVE_TOKEN';
+const SET_USER = 'stack/authentication/SET_USER';
 const STACK_TOKEN = 'STACK_TOKEN';
+const STACK_USER_ID = 'STACK_USER_ID';
 
 //SIGN IN 
 export const signIn = (email, password) => async dispatch => {
@@ -18,9 +19,10 @@ export const signIn = (email, password) => async dispatch => {
       throw response;
     }
     //Place token in Local Storage, update Redux State
-    const { token } = await response.json();
+    const { token, user } = await response.json();
     localStorage.setItem(STACK_TOKEN, token);
-    dispatch(setToken(token));
+    localStorage.setItem(STACK_USER_ID, user.id);
+    dispatch(setUser(token, user));
   }
   catch (err) {
     console.error(err);
@@ -48,9 +50,10 @@ export const signUp = (firstName, lastName, email, password, title, profPic) => 
       throw response
     }
     //Place token in Local Storage, update Redux State
-    const { token } = await response.json();
+    const { token, user } = await response.json();
     localStorage.setItem(STACK_TOKEN, token);
-    dispatch(setToken(token));
+    localStorage.setItem(STACK_USER_ID, user.id);
+    dispatch(setUser(token, user));
   }
   catch (err) {
     console.error(err);
@@ -59,48 +62,64 @@ export const signUp = (firstName, lastName, email, password, title, profPic) => 
 
 //SIGN OUT
 export const signOut = () => async (dispatch) => {
-  localStorage.removeItem(STACK_TOKEN)
+  localStorage.removeItem(STACK_TOKEN);
+  localStorage.removeItem(STACK_USER_ID);
   dispatch(removeToken())
 }
+//LOAD USER INFO
+export const loadUser = () => async dispatch => {
+  const token = localStorage.getItem(STACK_TOKEN);
+  const userId = localStorage.getItem(STACK_USER_ID);
+  try {
+    const res = await fetch(`${baseUrl}/api/users/${userId}`);
+    if (!res.ok) {
+      throw res
+    }
+    const user = await res.json();
+    dispatch(setUser(token, user))
+  }
+  catch (e) {
+    console.error(e);
+  }
+
+};
 
 //ACTION CREATOR FUNCTIONS
-export const setToken = (token) => ({
-  type: SET_TOKEN,
-  token,
+
+export const setUser = (token, user) => ({
+  type: SET_USER,
+  user,
+  token
 });
 
 export const removeToken = () => ({
   type: REMOVE_TOKEN
 })
 
-export const loadToken = () => async dispatch => {
-  const token = localStorage.getItem(STACK_TOKEN);
-  if (token) {
-    dispatch(setToken(token))
-  }
-};
 
 export default function reducer(state = { needSignIn: true }, action) {
   Object.freeze(state);
-
   const newState = Object.assign({}, state);
   switch (action.type) {
-    case SET_TOKEN: {
-      return {
-        ...newState,
-        token: action.token,
-        needSignIn: false
-      };
-    }
     case REMOVE_TOKEN: {
-      const newState = { ...state };
       delete newState.token;
       return {
         ...newState,
         needSignIn: true
       };
     }
-
+    case SET_USER: {
+      return {
+        token: action.token,
+        needSignIn: false,
+        userId: action.user.id,
+        firstName: action.user.firstName,
+        lastName: action.user.lastName,
+        email: action.user.email,
+        imageUrl: action.user.imageUrl,
+        title: action.user.title
+      };
+    }
     default: return state;
   }
 }

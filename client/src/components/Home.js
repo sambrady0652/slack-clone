@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { Box, Heading, Text, Anchor } from 'grommet'
 const Home = () => {
   return (

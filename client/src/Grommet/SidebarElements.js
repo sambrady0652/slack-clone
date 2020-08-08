@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../store/authentication'
 
 import {
@@ -21,17 +21,18 @@ import {
   Logout
 } from 'grommet-icons';
 
-const src = '//s.gravatar.com/avatar/b7fb138d53ba0f573212ccce38a7c43b?s=80';
-
-export const SidebarHeader = () => (
-  <Box align="center" gap="small" direction="row" margin={{ bottom: 'small' }}>
-    <Stack alignSelf="start" align="center" anchor="top-right">
-      <Avatar src={src} />
-      <Box pad="xsmall" background="orange" round responsive={false} />
-    </Stack>
-    <Text>Shimrit Yacobi</Text>
-  </Box>
-);
+export const SidebarHeader = () => {
+  const { imageUrl, firstName, lastName } = useSelector(state => state.user)
+  return (
+    <Box align="center" gap="small" direction="row" margin={{ bottom: 'small' }}>
+      <Stack alignSelf="start" align="center" anchor="top-right">
+        <Avatar src={imageUrl} />
+        <Box pad="xsmall" background="orange" round responsive={false} />
+      </Stack>
+      <Text>{firstName} {lastName}</Text>
+    </Box>
+  )
+};
 
 export const SidebarButton = ({ icon, label, ...rest }) => {
   return (

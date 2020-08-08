@@ -6,14 +6,14 @@ module.exports = {
       {
         userId: 1,
         channelId: 1,
-        content: "Hi, it's me Default! Just wanted to say hello on the General Chat.",
+        content: "Hi, it's me, the boss! Just wanted to say hello on the General Chat.",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         userId: 2,
         channelId: 1,
-        content: "Hi Default! This is a lovely General chat, is it not?",
+        content: "Hi Boss! This is a lovely General chat, is it not?",
         createdAt: new Date(),
         updatedAt: new Date()
       },

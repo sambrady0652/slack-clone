@@ -1,6 +1,7 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { Sidebar, Box } from 'grommet';
+import { useDispatch } from 'react-redux';
+import { loadUser } from '../store/authentication'
 
 import {
   SidebarHeader,
@@ -8,6 +9,11 @@ import {
 } from "../Grommet/SidebarElements"
 
 const Navbar = (props) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser())
+  });
+
   return (
     <Box
       gridArea={props.gridArea}

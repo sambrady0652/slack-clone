@@ -8,15 +8,15 @@ import { Grid } from 'grommet';
 
 import Navbar from './Navbar';
 import Channel from './Channel';
-import MessageComposer from './MessageComposer'
+import MessageComposer from './MessageComposer';
 
 const Main = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getChannel(id))
-  })
+    dispatch(getChannel(id));
+  });
 
   const token = localStorage.getItem("STACK_TOKEN")
   if (!token) {

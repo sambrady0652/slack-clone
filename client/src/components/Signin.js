@@ -5,19 +5,25 @@ import { Box, Form, Button } from 'grommet';
 
 import { signIn } from '../store/authentication';
 import { FormFieldLabel } from '../Grommet/FormElements';
+import { getGeneralId } from '../store/channel'
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const { needSignIn } = useSelector(state => state.authentication)
+  const { needSignIn } = useSelector(state => state.user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(signIn(email, password));
   }
   if (!needSignIn) {
-    return <Redirect to="/channels/1" />
+    return <Redirect to={`/channels/3`} />
+    // const general = async () => {
+    //   const generalId = await getGeneralId();
+    //   console.log(generalId);
+    // }
+    // general();
   }
 
   return (

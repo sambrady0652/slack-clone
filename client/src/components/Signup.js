@@ -15,7 +15,7 @@ const Signup = () => {
   const [profPic, setProfPic] = useState("")
 
   const dispatch = useDispatch();
-  const { needSignIn } = useSelector(state => state.authentication)
+  const { needSignIn } = useSelector(state => state.user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(signUp(firstName, lastName, email, password, title, profPic));

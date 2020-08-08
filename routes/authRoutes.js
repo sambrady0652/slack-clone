@@ -30,8 +30,8 @@ var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.AWS_BUCKET,
-    // acl: 'public-read',
-    // contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
       cb(null, file.originalname);
     }
@@ -48,7 +48,7 @@ router.post(
   handleValidationErrors,
   asyncHandler(async (req, res) => {
     const { firstName, lastName, email, password, title } = req.body;
-    let imageUrl = "https://stack-user-photosd94332e2-2c2a-4c08-8ee9-3fc0cc2f3137.s3.amazonaws.com/default-avatar.jpg"
+    let imageUrl = "https://stack-user-photosd94332e2-2c2a-4c08-8ee9-3fc0cc2f3137.s3.amazonaws.com/Default-profpic"
     if (req.file) {
       imageUrl = req.file.location
     }
@@ -64,8 +64,18 @@ router.post(
     else {
       const user = await User.create({ firstName, lastName, email, passwordHash, imageUrl, title });
       const token = getUserToken(user);
-      const id = user.id;
-      res.json({ token, user: { id: id }, imageUrl });
+      // const { id, firstName, lastName, email, imageUrl, title } = user;
+      res.json({
+        token,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastname,
+          email: user.email,
+          imageUrl: user.imageUrl,
+          title: user.title
+        }
+      });
     }
   }));
 
@@ -88,8 +98,18 @@ router.post('/signin', asyncHandler(async (req, res) => {
   }
   else {
     const token = getUserToken(user);
-    const id = user.id;
-    res.json({ token, user: { id: id } });
+    const { id, firstName, lastName, email, imageUrl, title } = user;
+    res.json({
+      token,
+      user: {
+        id,
+        firstName,
+        lastName,
+        email,
+        imageUrl,
+        title
+      }
+    });
   }
 }));
 

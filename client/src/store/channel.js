@@ -16,6 +16,21 @@ export const getChannel = (channelId) => async dispatch => {
   }
 }
 
+export const getGeneralId = async () => {
+  try {
+    const res = await fetch(`${baseUrl}/api/channels/general`);
+
+    if (!res.ok) {
+      throw res
+    }
+    const { general } = await res.json();
+    console.log(general.id);
+    return general.id
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
 //ACTION CREATORS
 
 export const loadChannel = (channel) => {
