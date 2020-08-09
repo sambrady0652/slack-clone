@@ -81,7 +81,6 @@ export const loadUser = () => async dispatch => {
   catch (e) {
     console.error(e);
   }
-
 };
 
 //ACTION CREATOR FUNCTIONS

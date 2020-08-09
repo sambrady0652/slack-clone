@@ -8,12 +8,14 @@ const cors = require("cors");
 //Internal Modules
 const { environment } = require('./config');
 const apiRouter = require('./routes/api')
-const authRouter = require('./routes/authRoutes')
+const authRouter = require('./routes/authRoutes');
+const { Message } = require('./db/models')
 
 //Server and Websocket Setup
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const Websocket = require('ws');
+const wss = new Websocket.Server({ server: http })
 
 //Application-wide Middleware
 app.use(cors());
@@ -27,18 +29,22 @@ app.use('/api', apiRouter)
 app.use('/auth', authRouter)
 
 //WEBSOCKETS
-// io.on('connection', (client) => {
-//   client.on('subscribeToTimer', (interval) => {
-//     console.log('client is subscribing to timer with interval ', interval);
-//     setInterval(() => {
-//       client.emit('timer', new Date());
-//     }, interval);
-//   });
-// });
+wss.on('connection', (ws) => {
+  ws.on('message', async (jsonData) => {
+    const message = JSON.parse(jsonData);
 
-// const port = 8000;
-// io.listen(port);
-// console.log('listening on port ', port);
+    const createdMessage = await Message.create(message);
+    const jsonCreated = JSON.stringify(createdMessage)
+    wss.clients.forEach((client) => {
+      if (client.readyState === Websocket.OPEN) {
+        client.send(jsonCreated);
+      }
+    });
+  });
+  ws.on('close', (e) => {
+    console.log(e)
+  })
+});
 
 //REACT BUILD CONFIG FOR HEROKU
 if (process.env.NODE_ENV === 'production') {

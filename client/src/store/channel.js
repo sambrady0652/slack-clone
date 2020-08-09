@@ -34,7 +34,7 @@ const initialState = {
   name: "",
   topic: "",
   users: [],
-  messages: []
+  oldMessages: []
 }
 
 //REDUCER 
@@ -52,7 +52,7 @@ export default function reducer(state = initialState, action) {
         name: action.channel.name,
         topic: action.channel.topic,
         users: action.users,
-        messages: action.channel.Messages,
+        oldMessages: action.channel.Messages,
       }
     default: return state;
   }
