@@ -57,7 +57,6 @@ export const SidebarButton = ({ icon, label, ...rest }) => {
       onClick={() => { return }}
       hoverIndicator={{ color: "brand" }}>
       <Button
-        fill
         pad="xlarge"
         gap="medium"
         alignSelf="start"
@@ -73,25 +72,24 @@ export const SidebarButton = ({ icon, label, ...rest }) => {
 export const MainNavigation = () => {
   const { channels } = useSelector(state => state.user)
 
-  if (!channels) {
-    return (
-      <Nav gap="small" fill="horizontal" responsive={false}>
-        <SidebarButton icon={<StatusInfoSmall />} label="Focus" />
-        <SidebarButton icon={<Projects />} label="Services" />
-        <SidebarButton icon={<Clock />} label="Glances" />
-        <SidebarButton icon={<Split />} label="Flows" />
-        <SidebarButton icon={<Analytics />} label="Analytics" />
-        <SidebarButton icon={<Configure />} label="Configure" />
-      </Nav>
-    )
-  }
   return (
     <Nav gap="small" fill="horizontal" responsive={false}>
-      {channels.map(channel => {
-        return (
-          <SidebarButton icon={<Configure />} key={channel.id} label={channel.Channel.name} onClick={() => <Redirect to={`channels/${channel.Channel.id}`} />} />
-        )
-      })}
+      <SidebarButton icon={<StatusInfoSmall />} label="This" />
+      <SidebarButton icon={<Projects />} label="Is" />
+      <SidebarButton icon={<Clock />} label="Under" />
+      <SidebarButton icon={<Split />} label="Development" />
+      <SidebarButton icon={<Analytics />} label="Sorry" />
+      <SidebarButton icon={<Configure />} label="Everyone" />
     </Nav>
-  );
+  )
+
+  // return (
+  //   <Nav gap="small" fill="horizontal" responsive={false}>
+  //     {channels.map(channel => {
+  //       return (
+  //         <SidebarButton icon={<Configure />} key={channel.id} label={channel.Channel.name} onClick={() => <Redirect to={`channels/${channel.Channel.id}`} />} />
+  //       )
+  //     })}
+  //   </Nav>
+  // );
 }
