@@ -4,10 +4,11 @@ import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import { getChannel } from '../store/channel'
-import { Grid } from 'grommet';
+import { Grid, Box } from 'grommet';
 
 import Navbar from './Navbar';
 import Channel from './Channel';
+import Head from './Header';
 import MessageComposer from './MessageComposer';
 
 const Main = () => {
@@ -42,20 +43,16 @@ const Main = () => {
   }
 
   return (
-    <Grid
-      fill
-      justifyContent="stretch"
-      rows={['auto', 'xsmall']}
-      columns={['1/4', 'flex']}
-      areas={[
-        ['sidebar', 'main'],
-        ['sidebar', 'message'],
-      ]}
-    >
-      <Navbar gridArea="sidebar" />
-      <Channel gridArea="main" webSocket={webSocket} />
-      <MessageComposer gridArea="message" webSocket={webSocket} />
-    </Grid>
+    <Box
+      direction="row"
+      style={{ position: "absolute" }}>
+      <Navbar />
+      <Box>
+        <Head />
+        <Channel webSocket={webSocket} />
+        <MessageComposer webSocket={webSocket} />
+      </Box>
+    </Box>
   )
 }
 

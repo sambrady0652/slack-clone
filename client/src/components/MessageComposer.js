@@ -22,24 +22,21 @@ const MessageComposer = (props) => {
   }
 
   return (
-    <Box gridArea={props.gridArea}
-      pad={{ left: "xsmall" }}
-      alignSelf="end"
-    >
-      <form onSubmit={handleSend} >
-        <Box
-          width="large"
-          direction="row"
-          align="center">
-          <TextInput
-            placeholder={`Message to ${name}`}
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)} />
-          <Button type="submit" primary alignSelf="end" plain={false} icon={<Send />} />
-        </Box>
 
-      </form>
-    </Box>
+    <form onSubmit={handleSend} style={{ position: "sticky", bottom: "0px" }} >
+      <Box
+        background="light-1"
+        width="large"
+        direction="row"
+        align="center">
+        <TextInput
+          placeholder={`Message to ${name}`}
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)} />
+        <Button type="submit" primary alignSelf="end" plain={false} icon={<Send />} />
+      </Box>
+    </form>
+
   )
 }
 

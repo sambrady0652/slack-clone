@@ -8,7 +8,7 @@ import {
   MainNavigation,
 } from "../Grommet/SidebarElements"
 
-const Navbar = (props) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser())
@@ -16,8 +16,9 @@ const Navbar = (props) => {
 
   return (
     <Box
-      gridArea={props.gridArea}
-      direction="row">
+      direction="row"
+      height="large"
+      style={{ position: "sticky", top: "0px" }}>
       <Sidebar
         fill
         background="neutral-2"

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from 'grommet'
+import { Box, Main } from 'grommet'
 
 import Message from './Message';
 import { writeMessage } from "../store/message"
@@ -26,14 +26,10 @@ const Channel = (props) => {
   }
 
   return (
-    //TODO: GET HEADER INTO CHANNEL
-    // <Header pad="small" >
-    //   <Text size="medium">{name}</Text>
-    //   <Text size="medium">{topic}</Text>
-    // </Header>
-    <Box gridArea={props.gridArea}
+
+    <Main
       direction="column-reverse"
-      overflow="scroll">
+      height="medium">
       <Box>
         {channelMessages.map(message => {
           return (
@@ -41,7 +37,7 @@ const Channel = (props) => {
           )
         })}
       </Box>
-    </Box >
+    </Main >
 
   )
 }
