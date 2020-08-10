@@ -92,12 +92,6 @@ export const MainNavigation = () => {
           <SidebarButton icon={<Configure />} key={channel.id} label={channel.Channel.name} onClick={() => <Redirect to={`channels/${channel.Channel.id}`} />} />
         )
       })}
-      {/* <SidebarButton icon={<StatusInfoSmall />} label="Focus" />
-      <SidebarButton icon={<Projects />} label="Services" />
-      <SidebarButton icon={<Clock />} label="Glances" />
-      <SidebarButton icon={<Split />} label="Flows" />
-      <SidebarButton icon={<Analytics />} label="Analytics" />
-      <SidebarButton icon={<Configure />} label="Configure" /> */}
     </Nav>
   );
 }
