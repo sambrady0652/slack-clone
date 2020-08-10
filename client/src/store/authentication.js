@@ -66,6 +66,7 @@ export const signOut = () => async (dispatch) => {
   localStorage.removeItem(STACK_USER_ID);
   dispatch(removeToken())
 }
+
 //LOAD USER INFO
 export const loadUser = () => async dispatch => {
   const token = localStorage.getItem(STACK_TOKEN);
