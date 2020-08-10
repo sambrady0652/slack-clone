@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Grommet } from 'grommet';
 
-import './index.css';
 import App from './App';
 import { theme } from './Grommet/theme';
 import configureStore from './store/configureStore';
