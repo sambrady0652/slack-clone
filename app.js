@@ -9,7 +9,7 @@ const cors = require("cors");
 //Internal Modules
 const { environment } = require('./config');
 const apiRouter = require('./routes/api')
-const authRouter = require('./routes/authRoutes');
+// const authRouter = require('./routes/authRoutes');
 const { Message } = require('./db/models')
 
 //Server and Websocket Setup
@@ -27,7 +27,7 @@ app.use(express.json());
 
 //ROUTES
 app.use('/api', apiRouter)
-app.use('/auth', authRouter)
+// app.use('/auth', authRouter)
 
 //WEBSOCKETS
 wss.on('connection', (ws) => {
@@ -50,7 +50,7 @@ wss.on('connection', (ws) => {
 //REACT BUILD CONFIG FOR HEROKU
 //TODO FIX THIS!!!!!
 if (process.env.NODE_ENV === 'production') {
-  // app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });

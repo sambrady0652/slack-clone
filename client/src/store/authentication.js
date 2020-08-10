@@ -10,7 +10,7 @@ const STACK_USER_ID = 'STACK_USER_ID';
 export const signIn = (email, password) => async dispatch => {
   try {
     //Retrieve Information from Server
-    const response = await fetch(`${baseUrl}/auth/signin`, {
+    const response = await fetch(`${baseUrl}/api/signin`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -42,7 +42,7 @@ export const signUp = (firstName, lastName, email, password, title, profPic) => 
       formData.append("profPic", profPic, `${firstName}-profpic`)
     }
 
-    const response = await fetch(`${baseUrl}/auth/signup`, {
+    const response = await fetch(`${baseUrl}/api/signup`, {
       method: 'post',
       body: formData
     });
