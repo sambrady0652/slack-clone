@@ -14,6 +14,7 @@ const { Message } = require('./db/models')
 const app = express();
 const http = require('http').createServer(app);
 const Websocket = require('ws');
+const { error } = require('console');
 const wss = new Websocket.Server({ server: http })
 
 //Application-wide Middleware
@@ -75,7 +76,7 @@ app.use((err, req, res, next) => {
   if (err.status === 404) {
     res.status(404);
     //TODO: BETTER ERROR HANDLER 
-    res.send('sorry page not found')
+    res.send('sorry page not found', err)
   } else {
     next(err);
   }
@@ -86,7 +87,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   const isProduction = environment === 'production';
   // TODO: BETTER ERROR HANDLER 
-  res.send("sorry, server error")
+  res.send("sorry, server error", err)
 });
 
 module.exports = http
