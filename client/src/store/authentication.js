@@ -76,8 +76,8 @@ export const loadUser = () => async dispatch => {
     if (!res.ok) {
       throw res
     }
-    const user = await res.json();
-    dispatch(setUser(token, user))
+    const { user, channels } = await res.json();
+    dispatch(setUser(token, user, channels))
   }
   catch (e) {
     console.error(e);
@@ -86,16 +86,16 @@ export const loadUser = () => async dispatch => {
 
 //ACTION CREATOR FUNCTIONS
 
-export const setUser = (token, user) => ({
+export const setUser = (token, user, channels) => ({
   type: SET_USER,
   user,
-  token
+  token,
+  channels
 });
 
 export const removeToken = () => ({
   type: REMOVE_TOKEN
 })
-
 
 export default function reducer(state = { needSignIn: true }, action) {
   Object.freeze(state);
@@ -117,7 +117,8 @@ export default function reducer(state = { needSignIn: true }, action) {
         lastName: action.user.lastName,
         email: action.user.email,
         imageUrl: action.user.imageUrl,
-        title: action.user.title
+        title: action.user.title,
+        channels: action.channels
       };
     }
     default: return state;

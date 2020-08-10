@@ -3,13 +3,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-// const morgan = require('morgan');
 const cors = require("cors");
 
 //Internal Modules
 const { environment } = require('./config');
 const apiRouter = require('./routes/api')
-// const authRouter = require('./routes/authRoutes');
 const { Message } = require('./db/models')
 
 //Server and Websocket Setup
@@ -21,13 +19,11 @@ const wss = new Websocket.Server({ server: http })
 //Application-wide Middleware
 app.use(cors());
 app.use(cookieParser());
-// app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 //ROUTES
 app.use('/api', apiRouter)
-// app.use('/auth', authRouter)
 
 //WEBSOCKETS
 wss.on('connection', (ws) => {
@@ -90,7 +86,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   const isProduction = environment === 'production';
   // TODO: BETTER ERROR HANDLER 
-  res.send("sorry, server error", err)
+  res.send("sorry, server error")
 });
 
 module.exports = http

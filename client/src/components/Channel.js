@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Main } from 'grommet'
 
@@ -12,6 +12,12 @@ const Channel = (props) => {
   const dispatch = useDispatch();
   const channelMessages = [...oldMessages, ...newMessages]
 
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
   useEffect(() => {
     if (webSocket.current !== null) {
       webSocket.current.onmessage = (e) => {
@@ -19,6 +25,7 @@ const Channel = (props) => {
         dispatch(writeMessage(message, message.userId))
       }
     }
+    scrollToBottom();
   }, [channelMessages, dispatch, webSocket]);
 
   if (!channelMessages) {
@@ -29,13 +36,15 @@ const Channel = (props) => {
 
     <Main
       direction="column-reverse"
-      height="medium">
+      height="medium"
+    >
       <Box>
         {channelMessages.map(message => {
           return (
             <Message key={message.id} message={message} />
           )
         })}
+        <div ref={messagesEndRef} />
       </Box>
     </Main >
 

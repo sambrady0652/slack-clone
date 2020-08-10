@@ -1,16 +1,3 @@
-// //External Modules
-// const express = require('express');
-// const cookieParser = require('cookie-parser');
-
-// //Internal Modules
-// const router = express.Router();
-// const { asyncHandler } = require('../utils')
-// const { Channel, User, Message, UserJoinChannel } = require('../db/models')
-
-// //Middleware
-// router.use(cookieParser());
-
-
 //EXTERNAL MODULES
 const express = require('express');
 const bcrypt = require('bcryptjs');
@@ -53,6 +40,7 @@ var upload = multer({
 
 //ROUTES
 
+//AuthRoutes
 //Create New User and start user Session
 router.post(
   '/signup',
@@ -139,17 +127,7 @@ router.post(
   }));
 
 
-
-
-
-
-
-
-
-
-
-
-
+//API Routes
 
 router.get('/channels/:id(\\d+)', asyncHandler(async (req, res) => {
   const channelId = Number(req.params.id);
@@ -169,7 +147,6 @@ router.get('/channels/:id(\\d+)', asyncHandler(async (req, res) => {
   res.json({ channel, users })
 }));
 
-
 router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
   const userId = Number(req.params.id);
   const user = await User.findOne({
@@ -177,17 +154,25 @@ router.get('/users/:id(\\d+)', asyncHandler(async (req, res) => {
       id: userId
     },
     include: [{ model: Message }],
+  });
+  const channels = await UserJoinChannel.findAll({
+    where: {
+      userId: userId
+    },
+    include: [Channel]
+  })
+  res.json({ user, channels });
+}));
 
+router.put('/users/:id(\\d+)/channels', asyncHandler(async (req, res) => {
+  const { userId, channelId } = req.body
+  UserJoinChannel.create({ userId, channelId });
+  const user = await User.findOne({
+    where: {
+      id: userId
+    }
   });
-  const { id, firstName, lastName, email, imageUrl, title } = user;
-  res.json({
-    id,
-    firstName,
-    lastName,
-    email,
-    imageUrl,
-    title
-  });
+  res.json(user);
 }));
 
 router.put('/messages', asyncHandler(async (req, res) => {

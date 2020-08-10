@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Box,
   Text,
-  Avatar
+  Avatar,
+  Paragraph
 } from 'grommet';
 
 const Message = (props) => {
@@ -35,7 +36,7 @@ const Message = (props) => {
             size="xsmall"
             margin={{ left: "xsmall" }}>{timestamp}</Text>
         </Box>
-        <Text >{content}</Text>
+        <Paragraph style={{ margin: "0px" }}>{content}</Paragraph>
       </Box>
     </Box>
     // <div  >{content}</div >
