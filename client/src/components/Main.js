@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import { getChannel } from '../store/channel'
-import { Grid, Box } from 'grommet';
+import { Box } from 'grommet';
 
 import Navbar from './Navbar';
 import Channel from './Channel';
