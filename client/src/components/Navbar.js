@@ -17,8 +17,8 @@ const Navbar = () => {
   return (
     <Box
       direction="row"
-      height="large"
-      style={{ position: "sticky", top: "0px" }}>
+      height="medium"
+      style={{ position: "sticky", top: "0px", height: "100%" }}>
       <Sidebar
         fill
         background="neutral-2"

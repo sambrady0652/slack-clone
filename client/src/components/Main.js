@@ -20,11 +20,8 @@ const Main = () => {
   useEffect(() => {
     dispatch(getChannel(id));
     const host = window.location.origin.replace(/^http/, 'ws')
-    console.log(host)
     const ws = new WebSocket(host);
-    ws.onopen = () => {
-      console.log("OPEN");
-    }
+
     ws.onclose = (e) => {
       webSocket.current = null;
     };
