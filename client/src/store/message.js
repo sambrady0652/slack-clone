@@ -8,7 +8,6 @@ export const writeMessage = (message, userId) => async dispatch => {
     if (!res.ok) {
       throw res
     }
-
     const user = await res.json();
     dispatch(setMessage(message, user))
   }

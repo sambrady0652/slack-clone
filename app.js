@@ -90,7 +90,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   const isProduction = environment === 'production';
   // TODO: BETTER ERROR HANDLER 
-  res.send("sorry, server error")
+  res.send("sorry, server error", err)
 });
 
 module.exports = http
