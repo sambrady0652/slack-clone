@@ -5,7 +5,6 @@ import { Box, Form, Button } from 'grommet';
 
 import { signIn } from '../store/authentication';
 import { FormFieldLabel } from '../Grommet/FormElements';
-import { getGeneralId } from '../store/channel'
 
 const Signin = () => {
   const [email, setEmail] = useState('');

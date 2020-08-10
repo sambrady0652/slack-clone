@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { getChannel } from '../store/channel'
 import { Grid } from 'grommet';
@@ -15,12 +14,9 @@ const Main = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const webSocket = useRef(null);
-  const { oldMessages } = useSelector(state => state.channel);
-  const [messages, setMessages] = useState([...oldMessages]);
   const token = localStorage.getItem("STACK_TOKEN")
 
   useEffect(() => {
-    setMessages([...oldMessages]);
     dispatch(getChannel(id));
 
     const ws = new WebSocket(`ws://localhost:8081`);
@@ -39,7 +35,7 @@ const Main = () => {
         webSocket.current.close()
       }
     }
-  }, [id])
+  }, [id, dispatch])
 
   if (!token) {
     return <Redirect to="/users/signin" />
@@ -49,7 +45,7 @@ const Main = () => {
     <Grid
       fill
       justifyContent="stretch"
-      rows={['flex', 'xsmall']}
+      rows={['auto', 'xsmall']}
       columns={['1/4', 'flex']}
       areas={[
         ['sidebar', 'main'],
@@ -57,7 +53,7 @@ const Main = () => {
       ]}
     >
       <Navbar gridArea="sidebar" />
-      <Channel gridArea="main" webSocket={webSocket} messages={messages} />
+      <Channel gridArea="main" webSocket={webSocket} />
       <MessageComposer gridArea="message" webSocket={webSocket} />
     </Grid>
   )

@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box } from 'grommet'
 
-import Message from './Message'
+import Message from './Message';
+import { writeMessage } from "../store/message"
 
 const Channel = (props) => {
   const { oldMessages } = useSelector(state => state.channel);
+  const newMessages = useSelector(state => state.message)
   const { webSocket } = props
-  const [messages, setMessages] = useState([...oldMessages]);
-  console.log("PROPS", props.messages)
+  const dispatch = useDispatch();
+  const channelMessages = [...oldMessages, ...newMessages]
 
   useEffect(() => {
     if (webSocket.current !== null) {
       webSocket.current.onmessage = (e) => {
         const message = JSON.parse(e.data)
-        setMessages([...oldMessages, message])
+        dispatch(writeMessage(message, message.userId))
       }
     }
-  }, [oldMessages]);
+  }, [channelMessages, dispatch, webSocket]);
 
-  if (!messages) {
+  if (!channelMessages) {
     return <div>Loading Messages...</div>;
   }
 
@@ -33,7 +35,7 @@ const Channel = (props) => {
       direction="column-reverse"
       overflow="scroll">
       <Box>
-        {oldMessages.map(message => {
+        {channelMessages.map(message => {
           return (
             <Message key={message.id} message={message} />
           )

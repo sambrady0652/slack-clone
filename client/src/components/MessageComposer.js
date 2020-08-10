@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Send } from 'grommet-icons';
-import { Box, TextInput, Button } from 'grommet';
-
-import { setMessage } from "../store/message";
+import { Box, TextInput, Button } from 'grommet';;
 
 const MessageComposer = (props) => {
   const { name, id } = useSelector(state => state.channel)
   const { userId } = useSelector(state => state.user)
   const [newMessage, setNewMessage] = useState('');
-  const dispatch = useDispatch();
   const { webSocket } = props
 
-  const handleSend = (e) => {
+  const handleSend = async (e) => {
     e.preventDefault();
-    // dispatch(writeMessage(newMessage, id, userId))
     const msg = {
       userId,
       channelId: id,
       content: newMessage
     }
-    // dispatch(setMessage(msg))
     const jsonNewMessage = JSON.stringify(msg);
     webSocket.current.send(jsonNewMessage);
     setNewMessage("")

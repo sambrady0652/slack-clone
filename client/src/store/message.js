@@ -1,71 +1,43 @@
 import { baseUrl } from '../config';
 
 const SET_MESSAGE = "/store/message/SET_MESSAGE"
-const SET_USER_FOR_MESSAGE = "/store/message/SET_USER_FOR_MESSAGE"
 
-export const writeMessage = (newMessage, channelId, userId) => async dispatch => {
+export const writeMessage = (message, userId) => async dispatch => {
   try {
-    const res = await fetch(`${baseUrl}/api/messages`, {
-      method: "put",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ newMessage, channelId, userId })
-    })
+    const res = await fetch(`${baseUrl}/api/users/${userId}`)
     if (!res.ok) {
       throw res
     }
 
-    const message = await res.json();
-    dispatch(setMessage(message))
+    const user = await res.json();
+    dispatch(setMessage(message, user))
   }
   catch (e) {
     console.error(e)
   }
 }
 
-//WORK IN PROGRESSSSS
-export const getUser = (userId, message) => async dispatch => {
-  try {
-    const res = await fetch(`${baseUrl}/api/users/${userId}`);
-    if (!res.ok) {
-      throw res
-    }
-    const user = await res.json();
-    setUserForMessage(user, message)
-    return user;
-  }
-  catch (e) {
-    console.error(e);
-  }
-};
-
-export const setMessage = message => ({
+export const setMessage = (message, user) => ({
   type: SET_MESSAGE,
-  message
+  message,
+  user
 })
 
-export const setUserForMessage = (user, message) => ({
-  type: SET_USER_FOR_MESSAGE,
-  user,
-  message
-})
 
 export default function reducer(state = [], action) {
   Object.freeze(state);
-  const newState = Object.assign({}, state);
+  const newState = Object.assign([], state);
 
   switch (action.type) {
     case SET_MESSAGE: {
-      return {
+      return [
         ...newState,
-        message: action.message
-      }
-    }
-    case SET_USER_FOR_MESSAGE: {
-      return {
-        ...newState,
-        message: action.message,
-        user: action.user
-      }
+        {
+          ...action.message,
+          User: action.user
+        }
+      ]
+
     }
     default: return state;
   }
